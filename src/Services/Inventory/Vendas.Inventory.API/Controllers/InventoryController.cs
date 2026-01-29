@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Vendas.Inventory.Application.Dtos;
+using Vendas.Inventory.Application.Interfaces.Servicos;
 
 namespace Vendas.Inventory.API.Controllers
 {
@@ -7,10 +9,19 @@ namespace Vendas.Inventory.API.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly IProductService _service;
+        public InventoryController(IProductService service)
         {
-            return Ok(new { Message = "API Inventory funcionando!" });
+            _service = service;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get() => Ok(await _service.GetAllAsync());
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CreateProductRequest request)
+        {
+            var id = await _service.CreateAsync(request);
+            return Ok(id);
         }
     }
 }
