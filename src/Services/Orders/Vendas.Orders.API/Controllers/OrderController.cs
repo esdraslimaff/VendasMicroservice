@@ -7,5 +7,10 @@ namespace Vendas.Orders.API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(new { Message = "API Order funcionando!" });
+        }
     }
 }

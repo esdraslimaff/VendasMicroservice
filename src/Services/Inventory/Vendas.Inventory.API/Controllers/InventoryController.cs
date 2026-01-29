@@ -10,7 +10,7 @@ namespace Vendas.Inventory.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new { Message = "API Orders funcionando!" });
+            return Ok(new { Message = "API Inventory funcionando!" });
         }
     }
 }
