@@ -20,10 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\src\Services\Inventory\Vendas.Inventory.API\Vendas.Inventory.API.csproj" />
     <ProjectReference Include="..\..\src\Services\Inventory\Vendas.Inventory.Application\Vendas.Inventory.Application.csproj" />
     <ProjectReference Include="..\..\src\Services\Inventory\Vendas.Inventory.Domain\Vendas.Inventory.Domain.csproj" />
   </ItemGroup>
