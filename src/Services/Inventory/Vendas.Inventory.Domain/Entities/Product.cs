@@ -24,6 +24,7 @@ namespace Vendas.Inventory.Domain.Entities
             Active = true;
 
             if (price <= 0) throw new ArgumentException("Preço inválido");
+            if (stockQuantity <= 0) throw new ArgumentException("Estoque não pode ser menor que 0");
         }
 
         public void DebitarEstoque(int quantidade)

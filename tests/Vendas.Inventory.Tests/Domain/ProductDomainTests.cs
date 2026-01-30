@@ -29,4 +29,13 @@ public class ProductDomainTests
             new Product("Produto", "Desc", -10, 5)
         );
     }
+
+    [Fact]
+    public void Nao_Deve_Criar_Produto_Com_Estoque_Negativo()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            new Product("Produto", "Desc", -10, 5)
+        );
+    }
+
 }
