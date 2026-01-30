@@ -24,7 +24,7 @@ namespace Vendas.Inventory.Tests.Application
             var result = await service.CreateAsync(request);
 
             repositoryMock.Verify(
-                r => r.AddAsync(It.IsAny<Product>())
+                r => r.AddAsync(It.IsAny<Product>()),
                 Times.Once()
             );
 
