@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
+using Vendas.EventBus.Abstractions;
+using Vendas.EventBus.RabbitMQ;
 using Vendas.Inventory.Application.Interfaces.Servicos;
 using Vendas.Inventory.Application.Services;
 using Vendas.Inventory.Domain.Interfaces.Repository;
@@ -6,6 +9,18 @@ using Vendas.Inventory.Infrastructure.Data.Context;
 using Vendas.Inventory.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var factory = new ConnectionFactory
+{
+    HostName = "localhost", 
+    UserName = "guest",
+    Password = "guest",
+    Port = 5672 
+};
+
+var connection = await factory.CreateConnectionAsync();
+builder.Services.AddSingleton(connection);
+builder.Services.AddSingleton<IEventBus, RabbitMqEventBus>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

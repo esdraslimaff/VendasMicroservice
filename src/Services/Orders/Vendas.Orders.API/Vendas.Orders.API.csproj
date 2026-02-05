@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Vendas.IntegrationEvents\Vendas.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Vendas.EventBus\Vendas.EventBus.csproj" />
     <ProjectReference Include="..\Vendas.Orders.Application\Vendas.Orders.Application.csproj" />
     <ProjectReference Include="..\Vendas.Orders.Infrastructure\Vendas.Orders.Infrastructure.csproj" />
   </ItemGroup>
