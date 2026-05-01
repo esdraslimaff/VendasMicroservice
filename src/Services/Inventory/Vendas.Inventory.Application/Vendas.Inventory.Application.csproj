@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Vendas.IntegrationEvents\Vendas.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Vendas.EventBus\Vendas.EventBus.csproj" />
     <ProjectReference Include="..\Vendas.Inventory.Domain\Vendas.Inventory.Domain.csproj" />
   </ItemGroup>
 

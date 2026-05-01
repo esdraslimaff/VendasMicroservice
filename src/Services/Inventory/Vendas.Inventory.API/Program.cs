@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using Vendas.EventBus.Abstractions;
 using Vendas.EventBus.RabbitMQ;
+using Vendas.IntegrationEvents;
+using Vendas.Inventory.Application.Handlers;
 using Vendas.Inventory.Application.Interfaces.Servicos;
 using Vendas.Inventory.Application.Services;
 using Vendas.Inventory.Domain.Interfaces.Repository;
@@ -25,6 +27,7 @@ builder.Services.AddSingleton<IEventBus, RabbitMqEventBus>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<OrderCreatedIntegrationEventHandler>();
 
 //To-do: Centralizar instâncias em application e infra
 builder.Services.AddDbContext<InventoryContext>(options =>
@@ -34,6 +37,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
+
+var eventBus = app.Services.GetRequiredService<IEventBus>();
+
+await eventBus.SubscribeAsync<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
 
 if (app.Environment.IsDevelopment())
 {

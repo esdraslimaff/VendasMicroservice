@@ -11,5 +11,6 @@ namespace Vendas.Inventory.Application.Interfaces.Servicos
     {
         Task<Guid> CreateAsync(CreateProductRequest request);
         Task<IEnumerable<ProductResponse>> GetAllAsync();
+        Task UpdateStockAsync(Guid productId, int quantity);
     }
 }

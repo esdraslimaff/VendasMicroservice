@@ -38,5 +38,18 @@ namespace Vendas.Inventory.Application.Services
             ));
 
         }
+
+        public async Task UpdateStockAsync(Guid productId, int quantity)
+        {
+            var product = await _repository.GetByIdAsync(productId);
+
+            if (product == null)
+                throw new Exception("Produto não encontrado");
+
+            product.DebitarEstoque(quantity);
+
+            await _repository.UpdateAsync(product);
+            await _repository.SaveChangesAsync();
+        }
     }
 }

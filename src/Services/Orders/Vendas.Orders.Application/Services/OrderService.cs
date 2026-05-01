@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vendas.EventBus.Abstractions;
+using Vendas.IntegrationEvents;
 using Vendas.Orders.Application.Interfaces.Services;
 using Vendas.Orders.Domain.Entities;
 using Vendas.Orders.Domain.Interfaces.Repository;
@@ -12,10 +14,12 @@ namespace Vendas.Orders.Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
+        private readonly IEventBus _eventBus;
 
-        public OrderService(IOrderRepository repository)
+        public OrderService(IOrderRepository repository, IEventBus eventBus)
         {
             _repository = repository;
+            _eventBus = eventBus;
         }
 
         public async Task<Guid> CreateOrderAsync(CreateOrderRequest request)
@@ -32,8 +36,15 @@ namespace Vendas.Orders.Application.Services
             }
 
             await _repository.AddAsync(order);
-
             await _repository.SaveChangesAsync();
+
+            var @event = new OrderCreatedIntegrationEvent(
+                order.Id,
+                order.TotalAmount,
+                request.Items.Select(i => new OrderItemDto(i.ProductId, i.Quantity)).ToList()
+            );
+
+            await _eventBus.PublishAsync(@event);
 
             return order.Id;
         }
